@@ -1,6 +1,7 @@
 #pragma once
 
 #include "esp_err.h"
+#include <stdint.h>
 
 esp_err_t sgp30_init(void);
 esp_err_t sgp30_measure(uint16_t *eco2, uint16_t *tvoc);

@@ -7,6 +7,7 @@
 #include <math.h>
 #include <string.h>
 
+
 uint8_t sgp30_crc(uint8_t *data, size_t len);
 
 // sgp30_iaq_init 0x2003 

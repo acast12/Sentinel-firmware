@@ -1,6 +1,7 @@
 #pragma once
 
 #include "esp_err.h"
+#include <stdint.h>
 
 esp_err_t i2c_master_init(void);
 

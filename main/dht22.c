@@ -6,6 +6,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+
 static int wait_for_level(int level, int timeout_us);
 
 esp_err_t dht22_init(void) {

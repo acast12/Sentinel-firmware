@@ -1,3 +1,6 @@
+# secrets
+secrets.h
+
 # macOS
 .DS_Store
 .AppleDouble
