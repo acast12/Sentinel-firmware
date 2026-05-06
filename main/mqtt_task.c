@@ -45,8 +45,6 @@ const char* root_ca = \
 
 static const char *TAG = "MQTT";
 
-static EventGroupHandle_t mqtt_event_group;
-
 #define MQTT_CONNECTED_BIT  BIT0
 #define MQTT_FAIL_BIT       BIT1
 
@@ -187,7 +185,7 @@ static int build_payload(char *buf, size_t buf_len, const processed_reading_t *r
             "\"tvoc_warn\":%s,"
             "\"tvoc_bad\":%s"
         "},"
-        "\"ts\":%lu"
+        "\"ts\":%llu"
         "}",
         r->temp_smoothed,
         r->humidity_smoothed,
@@ -201,6 +199,6 @@ static int build_payload(char *buf, size_t buf_len, const processed_reading_t *r
         r->alert_eco2_bad      ? "true" : "false",
         r->alert_tvoc_warn     ? "true" : "false",
         r->alert_tvoc_bad      ? "true" : "false",
-        (unsigned long)r->timestamp_ms
+        (unsigned long long)r->timestamp_ms
     );
 }

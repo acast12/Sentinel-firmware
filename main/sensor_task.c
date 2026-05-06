@@ -5,6 +5,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "shared_data.h"
+#include <sys/time.h>
 
 
 
@@ -22,13 +23,16 @@ void sensor_task(void *pvParameters) {
         
         ESP_LOGI("SENSOR", "T=%.1f°C H=%.1f%% eCO2=%uppb tvoc=%uppb", temperature_c, humidity, eco2, tvoc);
 
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+
         sensor_reading_t reading = {
             .temperature_c = temperature_c,
             .humidity = humidity,
             .eco2 = eco2,
             .tvoc = tvoc,
             .valid = true,
-            .timestamp_ms = xTaskGetTickCount() * portTICK_PERIOD_MS,
+            .timestamp_ms = (uint64_t)tv.tv_sec * 1000 + tv.tv_usec / 1000,
         };
         xQueueSend(g_sensor_queue, &reading, 0);
 
