@@ -29,14 +29,6 @@ void app_main(void) {
     g_sensor_queue = xQueueCreate(10, sizeof(sensor_reading_t));
     g_processed_queue = xQueueCreate(10, sizeof(processed_reading_t));
 
-    // WiFi must be up before MQTT can connect
-    esp_err_t wifi_err = wifi_manager_init();
-    if (wifi_err != ESP_OK) {
-        ESP_LOGE(TAG, "WiFi failed — mqtt_task exiting");
-        vTaskDelete(NULL);
-        return;
-    }
-
     xTaskCreate(sensor_task, "sensor_task", 4096, NULL, 5, NULL);
     xTaskCreate(processing_task, "processing_task", 4096, NULL, 4, NULL);
     xTaskCreate(mqtt_task, "mqtt_task", 8192, NULL, 3, NULL);

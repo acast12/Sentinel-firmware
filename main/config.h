@@ -31,4 +31,4 @@
 #define MQTT_QOS                1
 
 // WIFI
-#define WIFI_MAXIMUM_RETRY      5
+#define WIFI_MAXIMUM_RETRY      20

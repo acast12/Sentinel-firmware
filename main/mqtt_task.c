@@ -56,6 +56,16 @@ static int build_payload(char *buf, size_t buf_len, const processed_reading_t *r
 
 void mqtt_task(void *pvParameters) {
     ESP_LOGI(TAG, "Task started");
+
+    for(;;) {
+        esp_err_t wifi_err = wifi_manager_init();
+        if (wifi_err != ESP_OK) {
+            ESP_LOGE(TAG, "WIFI failed -retrying in 10s");
+            vTaskDelay(pdMS_TO_TICKS(10000));
+            continue;
+        }
+        break;
+    }
  
     s_mqtt_event_group = xEventGroupCreate();
  
