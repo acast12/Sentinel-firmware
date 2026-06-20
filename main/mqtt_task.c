@@ -70,10 +70,12 @@ void mqtt_task(void *pvParameters) {
     s_mqtt_event_group = xEventGroupCreate();
  
     esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri                      = MQTT_BROKER_URI,
-        .broker.verification.certificate = root_ca,
-        .credentials.username                    = MQTT_USERNAME,
-        .credentials.authentication.password     = MQTT_PASSWORD,
+        .broker.address.uri                      = ACTIVE_BROKER_URI,
+        #if !USE_LOCAL_BROKER
+            .broker.verification.certificate = root_ca,
+        #endif
+        .credentials.username                    = ACTIVE_USERNAME,
+        .credentials.authentication.password     = ACTIVE_PASSWORD,
         .credentials.client_id                   = MQTT_CLIENT_ID,
         .session.keepalive                        = 30,
     };
