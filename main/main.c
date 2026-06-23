@@ -8,6 +8,7 @@
 #include "i2c_driver.h"
 #include "shared_data.h"
 #include "nvs_flash.h"
+#include "provisioning.h"
 
 static const char *TAG = "MAIN";
 
@@ -24,6 +25,7 @@ void app_main(void) {
     }
     ESP_ERROR_CHECK(ret);
 
+    provisioning_check();
     i2c_master_init();
 
     g_sensor_queue = xQueueCreate(10, sizeof(sensor_reading_t));

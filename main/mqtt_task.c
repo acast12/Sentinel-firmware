@@ -9,6 +9,7 @@
 #include "esp_log.h"
 #include "mqtt_client.h"
 #include <stdio.h>
+#include "provisioning.h"
 
 const char* root_ca = \
 "-----BEGIN CERTIFICATE-----\n" \
@@ -105,6 +106,9 @@ void mqtt_task(void *pvParameters) {
         vTaskDelete(NULL);
         return;
     }
+
+    char topic[100];
+    ESP_ERROR_CHECK(provisioning_get_topic(topic, sizeof(topic)));
  
     // ── Publish loop ──────────────────────────────────────────────────────────
     processed_reading_t reading;
@@ -131,7 +135,7 @@ void mqtt_task(void *pvParameters) {
  
         int msg_id = esp_mqtt_client_publish(
             s_client,
-            MQTT_TOPIC,
+            topic,
             payload,
             0,          // length 0 = use strlen
             MQTT_QOS,
